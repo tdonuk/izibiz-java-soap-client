@@ -126,8 +126,8 @@ class EiarchiveTests {
         header.setSESSIONID(SESSION_ID);
         request.setREQUESTHEADER(header);
 
-        request.setFATURAUUID(sendEiarchiveUUID); // example id
-        request.setEMAIL("example@email.com"); // email address to send
+        request.setFATURAUUID(sendEiarchiveUUID); // last sent invoice
+        request.setEMAIL("example@email.com"); // email address to send. must be valid to get this working
 
         GetEmailEarchiveInvoiceResponse resp = adapter.getEmailEarchiveInvoice(request);
 
@@ -167,10 +167,11 @@ class EiarchiveTests {
         request.setREQUESTHEADER(header);
 
         CancelEArchiveInvoiceRequest.CancelEArsivInvoiceContent content = new CancelEArchiveInvoiceRequest.CancelEArsivInvoiceContent();
-        content.setFATURAUUID(sendEiarchiveUUID);
+        content.setFATURAUUID(sendEiarchiveUUID); // son gönderilen faturanın UUID değeri
 
         request.getCancelEArsivInvoiceContent().add(content);
 
+        // Debug modunda bu satıra gelmeden bekleyiniz, son gönderilen fatura portalde gelen kutusuna düşmedikçe bu metod çalışmayacaktır.
         CancelEArchiveInvoiceResponse resp = adapter.cancelEArchiveInvoice(request);
 
         Assertions.assertNull(resp.getERRORTYPE());
